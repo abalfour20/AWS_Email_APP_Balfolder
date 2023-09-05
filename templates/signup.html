@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% extends "base.html" %} {% block title %}Signup{{user}}{% endblock %} {% block styles %}
+
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Password Checker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    .topnav {
+        overflow: hidden;
+        background-color: gray;
+    }
+    
+    .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 25px;
+    }
+    
+    .topnav a.active {
+        background-color: gray;
+        color: white;
+    }
+    /* Style all input fields */
+    
+    input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-top: 6px;
+        margin-bottom: 11px;
+    }
+    /* Style the submit button */
+    
+    input[type=submit] {
+        background-color: grey;
+        color: white;
+    }
+    /* Style the container for inputs */
+    
+    .container {
+        background-color: #f1f1f1;
+        padding: 100px;
+    }
+    /* The message box is shown when the user clicks on the password field */
+    
+    #prompt {
+        display: none;
+        background: #f1f1f1;
+        color: red;
+        position: relative;
+        padding: 20px;
+        margin-top: 10px;
+    }
+    
+    #prompt p {
+        padding: 10px 35px;
+        font-size: 18px;
+    }
+    /* Add a green text color and a checkmark when the requirements are right */
+    
+    .valid {
+        color: blue;
+    }
+    
+    .valid:before {
+        position: relative;
+        left: -30px;
+        content: "Pass";
+    }
+    /* Add a red text color and an "x" when the requirements are wrong */
+    
+    .invalid {
+        color: red;
+    }
+    
+    .invalid:before {
+        position: relative;
+        left: -30px;
+        content: "Fail";
+    }
+</style>
+{% endblock %} {% block content %}
+
+
+
+
+<body>
+
+    <body>
+
+
+        <div class="container">
+            <form id="formid" method="POST">
+                <label for="fname">Firstname</label>
+                <input type="text" id="fname" name="fname" required>
+
+                <label for="lname">Lastname</label>
+                <input type="text" id="lname" name="lname" required>
+
+
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" required>
+
+                <label for="pword">Password</label>
+                <input type="password" id="pword" name="pword" required>
+
+                <label for="pword2">Confirm Password</label>
+                <input type="password" id="pword2" name="pword2" required>
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+
+        <div id="prompt">
+            <h3>Invalid Password:</h3>
+            <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+            <p id="uppercase" class="invalid">An <b>uppercase</b> letter</p>
+            <p id="number" class="invalid">A <b>number</b></p>
+            <p id="len" class="invalid">Min <b>of 8 characters</b></p>
+            <p id="dontmatch" class="invalid">Password don't match</p>
+
+        </div>
+    </body>
+
+    <script>
+        var myInput = document.getElementById("pword");
+        var myInput2 = document.getElementById("pword2");
+        var letter = document.getElementById("letter");
+        var capital = document.getElementById("uppercase");
+        var number = document.getElementById("number");
+        var len = document.getElementById("len");
+        var form = document.getElementById("formid");
+        var prompt = document.getElementById("prompt");
+        var dontmatch = document.getElementById("dontmatch")
+
+
+
+
+
+        myInput.onkeyup = function() {
+            if (pwordcheck(myInput.value, myInput2.value) === false) {
+                dontmatch.classList.add("invalid");
+                dontmatch.classList.remove("valid")
+            } else {
+                dontmatch.classList.add("valid")
+                dontmatch.classList.remove("invalid")
+            }
+
+            var lowerCaseLetters = /[a-z]/g;
+            if (myInput.value.match(lowerCaseLetters)) {
+                letter.classList.remove("invalid");
+                letter.classList.add("valid");
+            } else {
+                letter.classList.remove("valid");
+                letter.classList.add("invalid");
+            }
+
+            var upperCaseLetters = /[A-Z]/g;
+            if (myInput.value.match(upperCaseLetters)) {
+                uppercase.classList.remove("invalid");
+                uppercase.classList.add("valid");
+            } else {
+                uppercase.classList.remove("valid");
+                uppercase.classList.add("invalid");
+            }
+
+
+            var numbers = /[0-9]/g;
+            if (myInput.value.match(numbers)) {
+                number.classList.remove("invalid");
+                number.classList.add("valid");
+            } else {
+                number.classList.remove("valid");
+                number.classList.add("invalid");
+            }
+
+
+            if (myInput.value.length >= 8) {
+                len.classList.remove("invalid");
+                len.classList.add("valid");
+            } else {
+                len.classList.remove("valid");
+                len.classList.add("invalid");
+            }
+        }
+
+        myInput2.onkeyup = function() {
+            if (pwordcheck(myInput.value, myInput2.value) === false) {
+                dontmatch.classList.add("invalid");
+                dontmatch.classList.remove("valid")
+            } else {
+                dontmatch.classList.add("valid")
+                dontmatch.classList.remove("invalid")
+            }
+
+            var lowerCaseLetters = /[a-z]/g;
+            if (myInput2.value.match(lowerCaseLetters)) {
+                letter.classList.remove("invalid");
+                letter.classList.add("valid");
+            } else {
+                letter.classList.remove("valid");
+                letter.classList.add("invalid");
+            }
+
+            var upperCaseLetters = /[A-Z]/g;
+            if (myInput2.value.match(upperCaseLetters)) {
+                uppercase.classList.remove("invalid");
+                uppercase.classList.add("valid");
+            } else {
+                uppercase.classList.remove("valid");
+                uppercase.classList.add("invalid");
+            }
+
+
+            var numbers = /[0-9]/g;
+            if (myInput2.value.match(numbers)) {
+                number.classList.remove("invalid");
+                number.classList.add("valid");
+            } else {
+                number.classList.remove("valid");
+                number.classList.add("invalid");
+            }
+
+
+            if (myInput2.value.length >= 8) {
+                len.classList.remove("invalid");
+                len.classList.add("valid");
+            } else {
+                len.classList.remove("valid");
+                len.classList.add("invalid");
+            }
+        }
+
+        form.onsubmit = function(e) {
+            e.preventDefault();
+            if (prompt.getElementsByClassName("invalid").length === 0) {
+                form.submit();
+                return true;
+            } else {
+                prompt.style.display = "block";
+                return false;
+            }
+
+        }
+
+        function pwordcheck(pword, pword2) {
+            if (pword === pword2) {
+                return true
+            } else {
+                return false
+            }
+
+        }
+    </script>
+
+
+</body>
+
+</html>
+
+{% endblock %}
